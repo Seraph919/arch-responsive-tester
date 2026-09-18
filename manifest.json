@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "seraph.arch-responsive-tester",
+  "name": "Arch Responsive Tester",
+  "version": "1.0.0",
+  "author": "seraph",
+  "license": "MIT",
+  "description": "Multi-device responsive design preview and testing tool for websites and local dev servers.",
+  "keywords": [
+    "responsive",
+    "web",
+    "testing",
+    "mobile",
+    "tablet",
+    "desktop",
+    "developer",
+    "arch"
+  ],
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Arch Responsive Tester",
+    "description": "Test responsive website layouts across phone, tablet, and desktop views",
+    "category": "Development",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}

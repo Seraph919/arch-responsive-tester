@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Arch Responsive Tester
+Comment=Multi-device viewport preview and responsive design testing tool for Arch Linux
+Exec=arch-responsive-tester %U
+Icon=arch-responsive-tester
+Terminal=false
+Type=Application
+Categories=Development;WebDevelopment;Utility;
+Keywords=responsive;design;viewport;mobile;tablet;desktop;web;developer;arch;
+StartupWMClass=arch-responsive-tester

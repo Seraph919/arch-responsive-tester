@@ -1,0 +1,8 @@
+{
+  "name": "arch-responsive-tester",
+  "version": "1.0.0",
+  "description": "Multi-device responsive web design preview and testing tool for Arch Linux",
+  "main": "main.js",
+  "author": "seraph",
+  "license": "MIT"
+}

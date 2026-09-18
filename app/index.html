@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arch Responsive Tester</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Top Control Bar -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="logo">
+          <span class="logo-icon">󰹑</span>
+          <span class="logo-text">Arch <span class="logo-accent">Responsive</span></span>
+        </div>
+        <div class="theme-tag" id="theme-tag">Arch Dark</div>
+      </div>
+
+      <!-- Address & Navigation Bar -->
+      <div class="header-center">
+        <div class="nav-buttons">
+          <button class="icon-btn" id="btn-back" title="Go Back">❮</button>
+          <button class="icon-btn" id="btn-forward" title="Go Forward">❯</button>
+        </div>
+
+        <div class="omnibox">
+          <button class="omnibox-btn dev-presets-btn" id="btn-presets" title="Click to view Local Dev Servers & Presets">
+            <span class="preset-bolt">⚡</span>
+            <span>Dev Servers ▾</span>
+          </button>
+          <div class="url-input-wrapper">
+            <span class="url-protocol-hint" id="protocol-hint">https://</span>
+            <input type="text" id="url-input" value="https://asoudani.dev" placeholder="Enter website or port (e.g. asoudani.dev, 3000)..." autocomplete="off" spellcheck="false">
+          </div>
+          <button class="omnibox-btn clear-btn" id="btn-clear" title="Clear URL">✕</button>
+          <button class="go-btn" id="btn-go" title="Load Website">Go 󰄾</button>
+        </div>
+
+        <!-- Global Refresh button -->
+        <button class="action-btn" id="btn-refresh-all" title="Refresh All Views (Ctrl+R / F5)">
+          <span class="btn-icon">↻</span>
+          <span>Refresh All</span>
+        </button>
+      </div>
+
+      <!-- View Selection & Settings -->
+      <div class="header-right">
+        <!-- Viewport Toggles -->
+        <div class="device-toggles" role="group" aria-label="Select Device Views">
+          <button class="toggle-btn active" id="toggle-phone" data-target="phone" title="Toggle Phone View">
+            <span class="toggle-icon"></span>
+            <span class="toggle-label">Phone</span>
+          </button>
+          <button class="toggle-btn active" id="toggle-tablet" data-target="tablet" title="Toggle Tablet View">
+            <span class="toggle-icon"></span>
+            <span class="toggle-label">Tablet</span>
+          </button>
+          <button class="toggle-btn active" id="toggle-desktop" data-target="desktop" title="Toggle Desktop View">
+            <span class="toggle-icon"></span>
+            <span class="toggle-label">Desktop</span>
+          </button>
+        </div>
+
+        <div class="header-tools">
+          <!-- Quick Preset Multi-View selector -->
+          <div class="select-dropdown-wrapper">
+            <select id="select-view-preset" title="Quick view combinations">
+              <option value="all">All 3 Views</option>
+              <option value="phone-desktop">Phone + Desktop</option>
+              <option value="phone-tablet">Phone + Tablet</option>
+              <option value="tablet-desktop">Tablet + Desktop</option>
+              <option value="phone">Phone Only</option>
+              <option value="tablet">Tablet Only</option>
+              <option value="desktop">Desktop Only</option>
+            </select>
+          </div>
+
+          <!-- Auto-Refresh Option -->
+          <div class="select-dropdown-wrapper">
+            <select id="select-auto-refresh" title="Auto-refresh interval for live web development">
+              <option value="0">Auto-reload: Off</option>
+              <option value="3">Reload: 3s</option>
+              <option value="5">Reload: 5s</option>
+              <option value="10">Reload: 10s</option>
+              <option value="30">Reload: 30s</option>
+            </select>
+          </div>
+
+          <!-- Zoom / Fit Scale Option -->
+          <div class="select-dropdown-wrapper">
+            <select id="select-zoom" title="Scale Viewports">
+              <option value="fit" selected>Fit Window</option>
+              <option value="0.5">50%</option>
+              <option value="0.67">67%</option>
+              <option value="0.75">75%</option>
+              <option value="1.0">100% (1:1)</option>
+              <option value="1.25">125%</option>
+            </select>
+          </div>
+
+          <!-- Sync Scroll Toggle -->
+          <button class="icon-toggle-btn active" id="btn-sync-scroll" title="Synchronized Scrolling (Scrolling one device scrolls all)">
+            <span class="sync-icon">⇄</span>
+            <span>Sync</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Quick Presets Popover Menu (Hidden by default, shown on button click) -->
+    <div class="presets-menu" id="presets-menu">
+      <div class="presets-header">
+        <span class="presets-title">⚡ Local Dev Servers & Quick Sites</span>
+        <button class="presets-close" id="btn-presets-close" title="Close menu">✕</button>
+      </div>
+      <div class="presets-section-title">Local Dev Servers</div>
+      <div class="preset-items">
+        <button class="preset-item" data-url="http://localhost:3000"><span>⚡</span> localhost:3000 <small>Next.js / React</small></button>
+        <button class="preset-item" data-url="http://localhost:5173"><span>⚡</span> localhost:5173 <small>Vite / Vue / Svelte</small></button>
+        <button class="preset-item" data-url="http://localhost:8080"><span>⚡</span> localhost:8080 <small>Webpack / Java / Go</small></button>
+        <button class="preset-item" data-url="http://localhost:4321"><span>⚡</span> localhost:4321 <small>Astro</small></button>
+        <button class="preset-item" data-url="http://localhost:8000"><span>⚡</span> localhost:8000 <small>Python / Django</small></button>
+      </div>
+      <div class="presets-section-title">Featured Sites</div>
+      <div class="preset-items">
+        <button class="preset-item" data-url="https://asoudani.dev"><span>🌐</span> asoudani.dev <small>Developer Site</small></button>
+        <button class="preset-item" data-url="https://archlinux.org"><span>󰣇</span> archlinux.org <small>Arch Linux</small></button>
+        <button class="preset-item" data-url="https://github.com"><span></span> github.com <small>GitHub</small></button>
+        <button class="preset-item" data-url="https://news.ycombinator.com"><span>󰖟</span> news.ycombinator.com <small>Hacker News</small></button>
+      </div>
+    </div>
+
+    <!-- Main Viewport Canvas -->
+    <main class="viewport-canvas" id="viewport-canvas">
+      <!-- Centering Stage Wrapper -->
+      <div class="devices-stage" id="devices-stage">
+        <!-- Phone View Frame -->
+        <section class="device-card" id="card-phone" data-device="phone">
+          <div class="device-card-header">
+            <div class="device-meta">
+              <span class="device-icon"></span>
+              <select class="device-model-select" id="select-phone-model">
+                <option value="390x844" data-name="iPhone 15 / 14">iPhone 15 (390×844)</option>
+                <option value="375x667" data-name="iPhone SE">iPhone SE (375×667)</option>
+                <option value="412x915" data-name="Google Pixel 8">Pixel 8 (412×915)</option>
+                <option value="360x780" data-name="Samsung Galaxy S24">Galaxy S24 (360×780)</option>
+              </select>
+            </div>
+
+            <div class="device-dimension-pill" id="pill-phone">390 × 844 px</div>
+
+            <div class="device-actions">
+              <button class="device-btn" id="btn-rotate-phone" title="Rotate Orientation (Portrait ⇄ Landscape)">⇄ Rotate</button>
+              <button class="device-btn-icon" id="btn-refresh-phone" title="Refresh Phone View">↻</button>
+              <button class="device-btn-icon" id="btn-devtools-phone" title="Inspect DevTools">🛠</button>
+              <button class="device-btn-icon" id="btn-external-phone" title="Open in Browser">↗</button>
+            </div>
+          </div>
+
+          <div class="device-body" id="body-phone">
+            <div class="device-scale-wrapper" id="scale-phone">
+              <div class="device-screen" id="screen-phone" style="width: 390px; height: 844px;">
+                <div class="screen-loader" id="loader-phone"></div>
+                <webview id="wv-phone" partition="persist:arch_phone" useragent="Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1" allowpopups></webview>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tablet View Frame -->
+        <section class="device-card" id="card-tablet" data-device="tablet">
+          <div class="device-card-header">
+            <div class="device-meta">
+              <span class="device-icon"></span>
+              <select class="device-model-select" id="select-tablet-model">
+                <option value="820x1180" data-name="iPad Air">iPad Air (820×1180)</option>
+                <option value="744x1133" data-name="iPad Mini">iPad Mini (744×1133)</option>
+                <option value="1024x1366" data-name="iPad Pro 12.9">iPad Pro 12.9" (1024×1366)</option>
+                <option value="912x1368" data-name="Surface Pro">Surface Pro (912×1368)</option>
+              </select>
+            </div>
+
+            <div class="device-dimension-pill" id="pill-tablet">820 × 1180 px</div>
+
+            <div class="device-actions">
+              <button class="device-btn" id="btn-rotate-tablet" title="Rotate Orientation (Portrait ⇄ Landscape)">⇄ Rotate</button>
+              <button class="device-btn-icon" id="btn-refresh-tablet" title="Refresh Tablet View">↻</button>
+              <button class="device-btn-icon" id="btn-devtools-tablet" title="Inspect DevTools">🛠</button>
+              <button class="device-btn-icon" id="btn-external-tablet" title="Open in Browser">↗</button>
+            </div>
+          </div>
+
+          <div class="device-body" id="body-tablet">
+            <div class="device-scale-wrapper" id="scale-tablet">
+              <div class="device-screen" id="screen-tablet" style="width: 820px; height: 1180px;">
+                <div class="screen-loader" id="loader-tablet"></div>
+                <webview id="wv-tablet" partition="persist:arch_tablet" useragent="Mozilla/5.0 (iPad; CPU OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1" allowpopups></webview>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Desktop View Frame -->
+        <section class="device-card" id="card-desktop" data-device="desktop">
+          <div class="device-card-header">
+            <div class="device-meta">
+              <span class="device-icon"></span>
+              <select class="device-model-select" id="select-desktop-model">
+                <option value="1440x900" data-name="Desktop 1440×900">Desktop (1440×900)</option>
+                <option value="1280x800" data-name="MacBook 13">MacBook 13" (1280×800)</option>
+                <option value="1920x1080" data-name="Full HD 1080p">Full HD (1920×1080)</option>
+                <option value="1366x768" data-name="HD Laptop">HD Laptop (1366×768)</option>
+              </select>
+            </div>
+
+            <div class="device-dimension-pill" id="pill-desktop">1440 × 900 px</div>
+
+            <div class="device-actions">
+              <button class="device-btn-icon" id="btn-refresh-desktop" title="Refresh Desktop View">↻</button>
+              <button class="device-btn-icon" id="btn-devtools-desktop" title="Inspect DevTools">🛠</button>
+              <button class="device-btn-icon" id="btn-external-desktop" title="Open in Browser">↗</button>
+            </div>
+          </div>
+
+          <div class="device-body" id="body-desktop">
+            <div class="device-scale-wrapper" id="scale-desktop">
+              <div class="device-screen" id="screen-desktop" style="width: 1440px; height: 900px;">
+                <div class="screen-loader" id="loader-desktop"></div>
+                <webview id="wv-desktop" partition="persist:arch_desktop" useragent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" allowpopups></webview>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Empty State (when user deselects all views) -->
+      <div class="empty-state" id="empty-state" hidden>
+        <div class="empty-icon">󰹑</div>
+        <h2>No Viewports Selected</h2>
+        <p>Select at least one view (Phone, Tablet, or Desktop) from the top bar to preview responsive layouts.</p>
+        <div class="empty-actions">
+          <button class="action-btn" id="empty-btn-all">Show All 3 Views</button>
+          <button class="action-btn secondary" id="empty-btn-phone">Show Phone Only</button>
+          <button class="action-btn secondary" id="empty-btn-desktop">Show Desktop Only</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bottom Status Bar -->
+    <footer class="app-footer">
+      <div class="footer-left">
+        <span class="status-indicator live" id="status-indicator">● Live</span>
+        <span class="status-text" id="status-text">Ready</span>
+      </div>
+      <div class="footer-center">
+        <span class="keyboard-hints">
+          <kbd>Ctrl</kbd>+<kbd>R</kbd> Refresh All &nbsp;·&nbsp;
+          <kbd>Ctrl</kbd>+<kbd>L</kbd> URL Bar &nbsp;·&nbsp;
+          <kbd>Enter</kbd> Go
+        </span>
+      </div>
+      <div class="footer-right">
+        <span class="active-count" id="active-count">3 views active</span>
+        <span class="scale-info" id="scale-info">Scale: Fit</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

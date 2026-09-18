@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+APP_DIR="$(realpath "$SCRIPT_DIR/../app")"
+
+ELECTRON_BIN=""
+for cand in electron electron43 electron44 electron42 electron41; do
+  if command -v "$cand" >/dev/null 2>&1; then
+    ELECTRON_BIN="$(command -v "$cand")"
+    break
+  fi
+done
+
+if [[ -z "$ELECTRON_BIN" || ! -x "$ELECTRON_BIN" ]]; then
+  echo "Error: Electron binary not found." >&2
+  echo "Please install electron on Arch Linux using: sudo pacman -S electron" >&2
+  exit 1
+fi
+
+# Ozone platform settings for Hyprland / Wayland / X11
+export ELECTRON_OZONE_PLATFORM_HINT="auto"
+
+exec "$ELECTRON_BIN" \
+  --disable-vulkan \
+  --ozone-platform-hint=auto \
+  --enable-features=WaylandWindowDecorations \
+  "$APP_DIR" \
+  "$@"
